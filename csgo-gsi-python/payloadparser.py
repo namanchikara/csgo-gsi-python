@@ -1,5 +1,3 @@
-import gamestate
-
 class PayloadParser:
     def parse_payload(self, payload, gamestate):
         for item in payload:
@@ -7,4 +5,6 @@ class PayloadParser:
                 try:
                     setattr(getattr(gamestate, item), i, payload[item][i])
                 except:
+                    print("Exception occured in payloadparser.py")
+                finally:
                     pass

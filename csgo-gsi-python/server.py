@@ -6,6 +6,7 @@ import json
 import gamestate
 import payloadparser
 
+
 class GSIServer(HTTPServer):
     def __init__(self, server_address, auth_token):
         super(GSIServer, self).__init__(server_address, RequestHandler)
@@ -13,7 +14,7 @@ class GSIServer(HTTPServer):
         self.auth_token = auth_token
         self.gamestate = gamestate.GameState()
         self.parser = payloadparser.PayloadParser()
-        
+
         self.running = False
 
     def start_server(self):
@@ -21,8 +22,8 @@ class GSIServer(HTTPServer):
             thread = Thread(target=self.serve_forever)
             thread.start()
             first_time = True
-            while self.running == False:
-                if first_time == True:
+            while not self.running:
+                if first_time:
                     print("CS:GO GSI Server starting..")
                 first_time = False
         except:
@@ -46,6 +47,7 @@ class GSIServer(HTTPServer):
         except Exception as E:
             print(E)
             return False
+
 
 class RequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
